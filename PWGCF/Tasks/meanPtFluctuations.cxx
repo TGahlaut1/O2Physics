@@ -411,7 +411,7 @@ struct meanPtFluc
       //###################################################//
       if(abs(track.tpcNSigmaPi()) < nSigCut3){
         if(abs(track.rapidity(massPi)) >= 0.5) continue;
-        Nch_Pi_tpc++;
+        N_Pi_tpc++;
         Q1_Pi_tpc += track.pt();
         Q2_Pi_tpc += track.pt() * track.pt();
         hist.fill(HIST("QA/after/Pion/h_Pt_pi_TPC"), track.pt());
@@ -421,7 +421,7 @@ struct meanPtFluc
       }
       if(abs(track.tpcNSigmaKa()) < nSigCut3){
         if(abs(track.rapidity(massKa)) >= 0.5) continue;
-        Nch_Ka_tpc++;
+        N_Ka_tpc++;
         Q1_Ka_tpc += track.pt();
         Q2_Ka_tpc += track.pt() * track.pt();
         hist.fill(HIST("QA/after/Kaon/h_Pt_ka_TPC"), track.pt());
@@ -431,7 +431,7 @@ struct meanPtFluc
       }
       if(abs(track.tpcNSigmaPr()) < nSigCut3){
         if(abs(track.rapidity(massPr)) >= 0.5) continue;
-        Nch_Pr_tpc++;     
+        N_Pr_tpc++;     
         Q1_Pr_tpc += track.pt();  
         Q2_Pr_tpc += track.pt() * track.pt(); 
         hist.fill(HIST("QA/after/Proton/h_Pt_pr_TPC"), track.pt());
@@ -452,7 +452,7 @@ struct meanPtFluc
         if ((std::pow(track.tpcNSigmaPi(),2) + std::pow(track.tofNSigmaPi(),2)) < 6.0)
         {
           if(abs(track.rapidity(massPi)) >= 0.5) continue;
-          Nch_Pi_tof++;
+          N_Pi_tof++;
           Q1_Pi_tof += track.pt();
           Q2_Pi_tof += track.pt() * track.pt();   
           hist.fill(HIST("QA/before/Pion/h2_TOFSignal_pi_b"), track.p(), track.beta()); 
@@ -461,7 +461,7 @@ struct meanPtFluc
         if ((std::pow(track.tpcNSigmaKa(),2) + std::pow(track.tofNSigmaKa(),2)) < 6.0)
         {
           if(abs(track.rapidity(massKa)) >= 0.5) continue;
-          Nch_Ka_tof++;
+          N_Ka_tof++;
           Q1_Ka_tof += track.pt();
           Q2_Ka_tof += track.pt() * track.pt();
           hist.fill(HIST("QA/before/Kaon/h2_TOFSignal_ka_b"), track.p(), track.beta()); 
@@ -470,7 +470,7 @@ struct meanPtFluc
         if ((std::pow(track.tpcNSigmaPr(),2) + std::pow(track.tofNSigmaPr(),2)) < 6.0)
         {
           if(abs(track.rapidity(massPr)) >= 0.5) continue;
-          Nch_Pr_tof++;
+          N_Pr_tof++;
           Q1_Pr_tof += track.pt();
           Q2_Pr_tof += track.pt() * track.pt();
           hist.fill(HIST("QA/before/Proton/h2_TOFSignal_pr_b"), track.p(), track.beta()); 
@@ -718,60 +718,58 @@ struct meanPtFluc
       hist.fill(HIST("Analysis/Proton/h_fourpart_Mult_pr"), NTPC, fourpart1_Pr,  Cent_FT0M);    
     }
 
+    //----------------------------- TPC (No p cuts)---------------------------//
+    if(N_Pi_tpc > 1)
+    {
+      double mean_Q1_Pi_tpc = Q1_Pi_tpc/double(N_Pi_tpc);
+      double twopart_Pi_tpc = ((Q1_Pi_tpc * Q1_Pi_tpc) - Q2_Pi_tpc)/(double(N_Pi_tpc) * (double(N_Pi_tpc) - 1));
+      hist.fill(HIST("Analysis/Pion/h_mean_Q1_Mult_pi_tpc"), NTPC, mean_Q1_Pi_tpc, N_FT0M);
+      hist.fill(HIST("Analysis/Pion/h_twopart_Mult_pi_tpc"), NTPC, twopart_Pi_tpc, N_FT0M);
+    }
+    if(N_Ka_tpc > 1)
+    {
+      double mean_Q1_Ka_tpc = Q1_Ka_tpc/double(N_Ka_tpc);
+      double twopart_Ka_tpc = ((Q1_Ka_tpc * Q1_Ka_tpc) - Q2_Ka_tpc)/(double(N_Ka_tpc) * (double(N_Ka_tpc) - 1));
+      hist.fill(HIST("Analysis/Kaon/h_mean_Q1_Mult_ka_tpc"), NTPC, mean_Q1_Ka_tpc, N_FT0M);
+      hist.fill(HIST("Analysis/Kaon/h_twopart_Mult_ka_tpc"), NTPC, twopart_Ka_tpc, N_FT0M);
+    } 
+    if(N_Pr_tpc > 1)
+    {
+      double mean_Q1_Pr_tpc = Q1_Pr_tpc/double(N_Pr_tpc);
+      double twopart_Pr_tpc = ((Q1_Pr_tpc * Q1_Pr_tpc) - Q2_Pr_tpc)/(double(N_Pr_tpc) * (double(N_Pr_tpc) - 1));
+      hist.fill(HIST("Analysis/Proton/h_mean_Q1_Mult_pr_tpc"), NTPC, mean_Q1_Pr_tpc, N_FT0M);
+      hist.fill(HIST("Analysis/Proton/h_twopart_Mult_pr_tpc"), NTPC, twopart_Pr_tpc, N_FT0M);
+    }
 
     //-----------------------TPC + TOF (No p cuts)--------------------------//
-      if(Nch_tof > 1)
-      {
-        double mean_Q1_tof = Q1_tof/double(Nch_tof);
-        double twopart_tof = ((Q1_tof * Q1_tof) - Q2_tof)/(double(Nch_tof) * (double(Nch_tof) - 1));
-        hist.fill(HIST("Analysis/Charged/h_mean_Q1_Mult_ch_tof"), NTPC, mean_Q1_tof, N_FT0M);
-        hist.fill(HIST("Analysis/Charged/h_twopart_Mult_ch_tof"), NTPC, twopart_tof, N_FT0M);
-      }
-      if(N_Pi_tof > 1)
-      {
-        double mean_Q1_Pi_tof = Q1_Pi_tof/double(N_Pi_tof);
-        double twopart_Pi_tof = ((Q1_Pi_tof * Q1_Pi_tof) - Q2_Pi_tof)/(double(N_Pi_tof) * (double(N_Pi_tof) - 1));
-        hist.fill(HIST("Analysis/Pion/h_mean_Q1_Mult_pi_tof"), NTPC, mean_Q1_Pi_tof, N_FT0M);
-        hist.fill(HIST("Analysis/Pion/h_twopart_Mult_pi_tof"), NTPC, twopart_Pi_tof, N_FT0M);
-      }
-      if(N_Pr_tof > 1)
-      {
-        double mean_Q1_Pr_tof = Q1_Pr_tof/double(N_Pr_tof);
-        double twopart_Pr_tof = ((Q1_Pr_tof * Q1_Pr_tof) - Q2_Pr_tof)/(double(N_Pr_tof) * (double(N_Pr_tof) - 1));
-        hist.fill(HIST("Analysis/Proton/h_mean_Q1_Mult_pr_tof"), NTPC, mean_Q1_Pr_tof, N_FT0M);
-        hist.fill(HIST("Analysis/Proton/h_twopart_Mult_pr_tof"), NTPC, twopart_Pr_tof, N_FT0M);
-      }
-      if(N_Ka_tof > 1)
-      {
-        double mean_Q1_Ka_tof = Q1_Ka_tof/double(N_Ka_tof);
-        double twopart_Ka_tof = ((Q1_Ka_tof * Q1_Ka_tof) - Q2_Ka_tof)/(double(N_Ka_tof) * (double(N_Ka_tof) - 1));
-        hist.fill(HIST("Analysis/Kaon/h_mean_Q1_Mult_ka_tof"), NTPC, mean_Q1_Ka_tof, N_FT0M);
-        hist.fill(HIST("Analysis/Kaon/h_twopart_Mult_ka_tof"), NTPC, twopart_Ka_tof, N_FT0M);
-      }
-
-
-      //----------------------------- TPC (No p cuts)---------------------------//
-      if(N_Pi_tpc > 1)
-      {
-        double mean_Q1_Pi_tpc = Q1_Pi_tpc/double(N_Pi_tpc);
-        double twopart_Pi_tpc = ((Q1_Pi_tpc * Q1_Pi_tpc) - Q2_Pi_tpc)/(double(N_Pi_tpc) * (double(N_Pi_tpc) - 1));
-        hist.fill(HIST("Analysis/Pion/h_mean_Q1_Mult_pi_tpc"), NTPC, mean_Q1_Pi_tpc, N_FT0M);
-        hist.fill(HIST("Analysis/Pion/h_twopart_Mult_pi_tpc"), NTPC, twopart_Pi_tpc, N_FT0M);
-      }
-      if(N_Pr_tpc > 1)
-      {
-        double mean_Q1_Pr_tpc = Q1_Pr_tpc/double(N_Pr_tpc);
-        double twopart_Pr_tpc = ((Q1_Pr_tpc * Q1_Pr_tpc) - Q2_Pr_tpc)/(double(N_Pr_tpc) * (double(N_Pr_tpc) - 1));
-        hist.fill(HIST("Analysis/Proton/h_mean_Q1_Mult_pr_tpc"), NTPC, mean_Q1_Pr_tpc, N_FT0M);
-        hist.fill(HIST("Analysis/Proton/h_twopart_Mult_pr_tpc"), NTPC, twopart_Pr_tpc, N_FT0M);
-      }
-      if(N_Ka_tpc > 1)
-      {
-        double mean_Q1_Ka_tpc = Q1_Ka_tpc/double(N_Ka_tpc);
-        double twopart_Ka_tpc = ((Q1_Ka_tpc * Q1_Ka_tpc) - Q2_Ka_tpc)/(double(N_Ka_tpc) * (double(N_Ka_tpc) - 1));
-        hist.fill(HIST("Analysis/Kaon/h_mean_Q1_Mult_ka_tpc"), NTPC, mean_Q1_Ka_tpc, N_FT0M);
-        hist.fill(HIST("Analysis/Kaon/h_twopart_Mult_ka_tpc"), NTPC, twopart_Ka_tpc, N_FT0M);
-      } 
+    if(Nch_tof > 1)
+    {
+      double mean_Q1_tof = Q1_tof/double(Nch_tof);
+      double twopart_tof = ((Q1_tof * Q1_tof) - Q2_tof)/(double(Nch_tof) * (double(Nch_tof) - 1));
+      hist.fill(HIST("Analysis/Charged/h_mean_Q1_Mult_ch_tof"), NTPC, mean_Q1_tof, N_FT0M);
+      hist.fill(HIST("Analysis/Charged/h_twopart_Mult_ch_tof"), NTPC, twopart_tof, N_FT0M);
+    }
+    if(N_Pi_tof > 1)
+    {
+      double mean_Q1_Pi_tof = Q1_Pi_tof/double(N_Pi_tof);
+      double twopart_Pi_tof = ((Q1_Pi_tof * Q1_Pi_tof) - Q2_Pi_tof)/(double(N_Pi_tof) * (double(N_Pi_tof) - 1));
+      hist.fill(HIST("Analysis/Pion/h_mean_Q1_Mult_pi_tof"), NTPC, mean_Q1_Pi_tof, N_FT0M);
+      hist.fill(HIST("Analysis/Pion/h_twopart_Mult_pi_tof"), NTPC, twopart_Pi_tof, N_FT0M);
+    }
+    if(N_Ka_tof > 1)
+    {
+      double mean_Q1_Ka_tof = Q1_Ka_tof/double(N_Ka_tof);
+      double twopart_Ka_tof = ((Q1_Ka_tof * Q1_Ka_tof) - Q2_Ka_tof)/(double(N_Ka_tof) * (double(N_Ka_tof) - 1));
+      hist.fill(HIST("Analysis/Kaon/h_mean_Q1_Mult_ka_tof"), NTPC, mean_Q1_Ka_tof, N_FT0M);
+      hist.fill(HIST("Analysis/Kaon/h_twopart_Mult_ka_tof"), NTPC, twopart_Ka_tof, N_FT0M);
+    }
+    if(N_Pr_tof > 1)
+    {
+      double mean_Q1_Pr_tof = Q1_Pr_tof/double(N_Pr_tof);
+      double twopart_Pr_tof = ((Q1_Pr_tof * Q1_Pr_tof) - Q2_Pr_tof)/(double(N_Pr_tof) * (double(N_Pr_tof) - 1));
+      hist.fill(HIST("Analysis/Proton/h_mean_Q1_Mult_pr_tof"), NTPC, mean_Q1_Pr_tof, N_FT0M);
+      hist.fill(HIST("Analysis/Proton/h_twopart_Mult_pr_tof"), NTPC, twopart_Pr_tof, N_FT0M);
+    }
   }     
 };
 
