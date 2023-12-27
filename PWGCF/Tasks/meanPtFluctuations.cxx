@@ -256,7 +256,7 @@ struct meanPtFluc
               kTH2D, {{axisP}, {axisTOFSignal}});
 
 
-    //Analysis
+    //Analysis:
     //Charged Particles
     hist.add("Analysis/Charged/h_Mult_ch", "Multiplicity of Charged Prticles", kTH1D, {axisMult});
     hist.add("Analysis/Charged/h_mean_Q1_ch", "mean p_{T} (Charged particles)", kTH1D, {axisMeanPt});
@@ -270,7 +270,7 @@ struct meanPtFluc
     hist.add("Analysis/Charged/h_fourpart_Mult_ch", "Fourpart vs N_{ch} (Charged Particles)",  
               kTHnSparseD, {{axisMultTPC}, {axisPart}, {axisMultFT0M}});
     
-    //Pion
+    //Pions
     hist.add("Analysis/Pion/h_Mult_pi", "Multiplicity Pion", kTH1D, {axisMult});
     hist.add("Analysis/Pion/h_mean_Q1_pi", "mean p_{T} Pion", kTH1D,{axisMeanPt});
     hist.add("Analysis/Pion/p_mean_Q1_pi", "mean p_{T} Pion", kTProfile,{axisMult});
@@ -283,7 +283,7 @@ struct meanPtFluc
     hist.add("Analysis/Pion/h_fourpart_Mult_pi", "fourpart_Mult Pion",    
               kTHnSparseD, {{axisMultTPC}, {axisPart}, {axisMultFT0M}});
 
-    //Kaon
+    //Kaons
     hist.add("Analysis/Kaon/h_Mult_ka", "Multiplicity Kaon", kTH1D, {axisMult});
     hist.add("Analysis/Kaon/h_mean_Q1_ka", "mean p_{T} Kaon", kTH1D,{axisMeanPt});
     hist.add("Analysis/Kaon/p_mean_Q1_ka", "mean p_{T} Kaon", kTProfile,{axisMult});
@@ -296,7 +296,7 @@ struct meanPtFluc
     hist.add("Analysis/Kaon/h_fourpart_Mult_ka", "fourpart_Mult Kaon",    
               kTHnSparseD, {{axisMultTPC}, {axisPart}, {axisMultFT0M}});
 
-    //Proton
+    //Protons
     hist.add("Analysis/Proton/h_Mult_pr", "Multiplicity Proton", kTH1D, {axisMult});
     hist.add("Analysis/Proton/h_mean_Q1_pr", "mean p_{T} Proton", kTH1D,{axisMeanPt});
     hist.add("Analysis/Proton/p_mean_Q1_pr", "mean p_{T} Proton", kTProfile,{axisMult});
