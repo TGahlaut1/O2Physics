@@ -354,7 +354,6 @@ struct meanPtFluc
     }
     hist.fill(HIST("QA/before/h_VtxZ"), myCol.posZ());
     hist.fill(HIST("QA/before/h_Counts"), 2);
-
   }
   PROCESS_SWITCH(histograms, process_QA, "process QA", true);
   
@@ -418,9 +417,7 @@ struct meanPtFluc
         hist.fill(HIST("QA/after/Pion/h_Pt_pi_TPC"), track.pt());
         hist.fill(HIST("QA/after/Pion/h_rap_pi_TPC"), track.rapidity(massPi));
         hist.fill(HIST("QA/before/Pion/h2_TPCSignal_pi_b"), track.p(), track.tpcSignal()); 
-        hist.fill(HIST("QA/before/Pion/h2_ExpTPCSignal_pi_b"), track.p(), track.tpcExpSignalPi(track.tpcSignal())); 
-
-        
+        hist.fill(HIST("QA/before/Pion/h2_ExpTPCSignal_pi_b"), track.p(), track.tpcExpSignalPi(track.tpcSignal()));       
       }
       if(abs(track.tpcNSigmaKa()) < nSigCut3){
         if(abs(track.rapidity(massKa)) >= 0.5) continue;
@@ -431,7 +428,6 @@ struct meanPtFluc
         hist.fill(HIST("QA/after/Kaon/h_rap_ka_TPC"), track.rapidity(massKa));  
         hist.fill(HIST("QA/before/Kaon/h2_TPCSignal_ka_b"), track.p(), track.tpcSignal()); 
         hist.fill(HIST("QA/before/Kaon/h2_ExpTPCSignal_ka_b"), track.p(), track.tpcExpSignalKa(track.tpcSignal())); 
-
       }
       if(abs(track.tpcNSigmaPr()) < nSigCut3){
         if(abs(track.rapidity(massPr)) >= 0.5) continue;
@@ -442,7 +438,6 @@ struct meanPtFluc
         hist.fill(HIST("QA/after/Proton/h_rap_pr_TPC"), track.rapidity(massPr)); 
         hist.fill(HIST("QA/before/Proton/h2_TPCSignal_pr_b"), track.p(), track.tpcSignal()); 
         hist.fill(HIST("QA/before/Proton/h2_ExpTPCSignal_pr_b"), track.p(), track.tpcExpSignalPr(track.tpcSignal())); 
-
       }
 
       //###################################################
@@ -461,8 +456,7 @@ struct meanPtFluc
           Q1_Pi_tof += track.pt();
           Q2_Pi_tof += track.pt() * track.pt();   
           hist.fill(HIST("QA/before/Pion/h2_TOFSignal_pi_b"), track.p(), track.beta()); 
-          hist.fill(HIST("QA/before/Pion/h2_ExpTOFSignal_pi_b"), track.p(), track.tofExpSignalPi(track.beta())); 
-            
+          hist.fill(HIST("QA/before/Pion/h2_ExpTOFSignal_pi_b"), track.p(), track.tofExpSignalPi(track.beta()));             
         }
         if ((std::pow(track.tpcNSigmaKa(),2) + std::pow(track.tofNSigmaKa(),2)) < 6.0)
         {
@@ -519,7 +513,6 @@ struct meanPtFluc
         hist.fill(HIST("QA/after/Pion/h2_ExpTPCSignal_pi_a"), track.p(), track.tpcExpSignalPi(track.tpcSignal())); 
       }
       
-
       //For Kaons:
       if ((abs(track.tpcNSigmaKa()) < nSigCut3   && track.p() > kaP1 && track.p() <= kaP2)
         ||(abs(track.tpcNSigmaKa()) < nSigCut25  && track.p() > kaP2 && track.p() <= kaP3)
@@ -586,6 +579,7 @@ struct meanPtFluc
         hist.fill(HIST("QA/after/Proton/h2_ExpTPCSignal_pr_a"), track.p(), track.tpcExpSignalPr(track.tpcSignal())); 
       }  
     }
+
     NTPC = col.multTPC();
     N_FT0M = col.multFT0M();
     Cent_FT0M = col.centFT0M();
@@ -599,14 +593,12 @@ struct meanPtFluc
     hist.fill(HIST("QA/after/p_NTPC_Cent"), Cent_FT0M, NTPC);
     hist.fill(HIST("QA/after/p_NTPC_NFT0M"), N_FT0M, NTPC);
     hist.fill(HIST("QA/after/p_NFT0M_NTPC"), NTPC, N_FT0M);
+    hist.fill(HIST("QA/after/h2_NTPC_Nch"), NTPC, Nch); 
 
     hist.fill(HIST("Analysis/Charged/h_Mult_ch"), Nch);
     hist.fill(HIST("Analysis/Pion/h_Mult_pi"), N_Pi);
-    hist.fill(HIST("Analysis/Proton/h_Mult_pr"), N_Pr);
     hist.fill(HIST("Analysis/Kaon/h_Mult_ka"), N_Ka);
-
-    hist.fill(HIST("QA/after/h2_NTPC_Nch"), NTPC, Nch); 
-
+    hist.fill(HIST("Analysis/Proton/h_Mult_pr"), N_Pr);
 
     //Charged Particles:
     if(Nch > 1)
@@ -716,7 +708,6 @@ struct meanPtFluc
       auto threepart_Pr = ((Q1_Pr * Q1_Pr * Q1_Pr) - (3 * Q2_Pr * Q1_Pr) + 2 * Q3_Pr);
       auto threepart1_Pr = threepart_Pr / Nch3_Pr;
       hist.fill(HIST("Analysis/Proton/h_threepart_Mult_pr"), NTPC, threepart1_Pr, N_FT0M);
-
     }
 
     if(N_Pr > 3)
@@ -724,8 +715,7 @@ struct meanPtFluc
       auto Nch4_Pr = double(N_Pr) * (double(N_Pr) - 1) * (double(N_Pr) - 2) * (double(N_Pr) - 3);
       auto fourpart_Pr = ((Q1_Pr * Q1_Pr * Q1_Pr * Q1_Pr) - (6 * Q2_Pr * Q1_Pr * Q1_Pr) + (3 * Q2_Pr * Q2_Pr) + (8 * Q3_Pr * Q1_Pr) - 6 * Q4_Pr );
       auto fourpart1_Pr = fourpart_Pr / Nch4_Pr;
-      hist.fill(HIST("Analysis/Proton/h_fourpart_Mult_pr"), NTPC, fourpart1_Pr,  Cent_FT0M);
-    
+      hist.fill(HIST("Analysis/Proton/h_fourpart_Mult_pr"), NTPC, fourpart1_Pr,  Cent_FT0M);    
     }
 
 
@@ -787,8 +777,6 @@ struct meanPtFluc
 
 WorkflowSpec defineDataProcessing(ConfigContext const& cfgc)
 {
-  return WorkflowSpec{
-    adaptAnalysisTask<meanPtFluc>(cfgc)
-  };
+  return WorkflowSpec{adaptAnalysisTask<meanPtFluc>(cfgc) };
 }
 
