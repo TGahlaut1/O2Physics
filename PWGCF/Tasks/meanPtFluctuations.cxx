@@ -38,6 +38,7 @@ struct meanPtFluc
   Configurable<float> nSigCut2{"nSigCut2", 2.0, "nSigma cut (2)"};
   Configurable<float> nSigCut3{"nSigCut3", 3.0, "nSigma cut (3)"};
   Configurable<float> nSigCut4{"nSigCut4", 4.0, "nSigma cut (4)"};
+  Configurable<float> nSigCut5{"nSigCut5", 5.0, "nSigma cut (5)"};
   Configurable<float> nSigCut15{"nSigCut15", 1.5, "nSigma cut (1.5)"};
   Configurable<float> nSigCut25{"nSigCut25", 2.5, "nSigma cut (2.5)"};
   Configurable<float> piP1{"piP1", 0.65, "pion p (1)"};
@@ -52,7 +53,7 @@ struct meanPtFluc
   Configurable<float> kaP6{"kaP6", 1.10, "kaon p (6)"};
   Configurable<float> kaP7{"kaP7", 1.28, "kaon p (7)"};
   Configurable<float> kaP8{"kaP8", 1.50, "kaon p (8)"};
-  Configurable<float> prP1{"prP1", 0.30, "min proton p (1)"};
+  Configurable<float> prP1{"prP1", 0.40, "min proton p (1)"};
   Configurable<float> prP2{"prP2", 0.95, "proton p (2)"};
   Configurable<float> prP3{"prP3", 1.00, "proton p (3)"};
   Configurable<float> prP4{"prP4", 1.05, "proton p (4)"};
@@ -122,42 +123,18 @@ struct meanPtFluc
               kTH2D, {{axisP}, {axisTOFNsigma}});
     hist.add("QA/before/Pion/h2_TpcTofNsigma_pi", "n #sigma_{TPC} vs n #sigma_{TOF} (Pions)", 
               kTH2D, {{{axisTPCNsigma}, {axisTOFNsigma}}});
-    hist.add("QA/before/Pion/h2_TPCSignal_pi_b", "TPC Signal Pions (before)", 
-              kTH2D, {{axisP}, {axisTPCSignal}});
-    hist.add("QA/before/Pion/h2_TOFSignal_pi_b", "TOF Signal Pions (before)", 
-              kTH2D, {{axisP}, {axisTOFSignal}});
-    hist.add("QA/before/Pion/h2_ExpTPCSignal_pi_b", "Expected TPC Signal Pions (before)", 
-              kTH2D, {{axisP}, {axisTPCSignal}});
-    hist.add("QA/before/Pion/h2_ExpTOFSignal_pi_b", "Expected TOF Signal Pions (before)", 
-              kTH2D, {{axisP}, {axisTOFSignal}});
     hist.add("QA/before/Kaon/h2_TPCNsigma_ka", "n #sigma_{TPC} Kaons", 
               kTH2D, {{axisP}, {axisTPCNsigma}});
     hist.add("QA/before/Kaon/h2_TOFNsigma_ka", "n #sigma_{TOF} Kaons", 
               kTH2D, {{axisP}, {axisTOFNsigma}});
     hist.add("QA/before/Kaon/h2_TpcTofNsigma_ka", "N_{TPC} igma vs n #sigma_{TOF} Kaons", 
-              kTH2D, {{{axisTPCNsigma}, {axisTOFNsigma}}});
-    hist.add("QA/before/Kaon/h2_TPCSignal_ka_b", "TPC Signal Kaons (before)", 
-              kTH2D, {{axisP}, {axisTPCSignal}});
-    hist.add("QA/before/Kaon/h2_TOFSignal_ka_b", "TOF Signal Kaons (before)", 
-              kTH2D, {{axisP}, {axisTOFSignal}});
-    hist.add("QA/before/Kaon/h2_ExpTPCSignal_ka_b", "Expected TPC Signal Kaons (before)", 
-              kTH2D, {{axisP}, {axisTPCSignal}});
-    hist.add("QA/before/Kaon/h2_ExpTOFSignal_ka_b", "Expected TOF Signal Kaons (before)", 
-              kTH2D, {{axisP}, {axisTOFSignal}});
+              kTH2D, {{{axisTPCNsigma}, {axisTOFNsigma}}});  
     hist.add("QA/before/Proton/h2_TPCNsigma_pr", "n #sigma_{TPC} Protons", 
               kTH2D, {{axisP}, {axisTPCNsigma}});
     hist.add("QA/before/Proton/h2_TOFNsigma_pr", "n #sigma_{TOF} Protons", 
               kTH2D, {{axisP}, {axisTOFNsigma}});
     hist.add("QA/before/Proton/h2_TpcTofNsigma_pr", "n #sigma_{TPC} vs n #sigma_{TOF} Protons", 
               kTH2D, {{{axisTPCNsigma}, {axisTOFNsigma}}});
-    hist.add("QA/before/Proton/h2_TPCSignal_pr_b", "TPC Signal Protons (before)", 
-              kTH2D, {{axisP}, {axisTPCSignal}});
-    hist.add("QA/before/Proton/h2_TOFSignal_pr_b", "TOF Signal Protons (before)", 
-              kTH2D, {{axisP}, {axisTOFSignal}});
-    hist.add("QA/before/Proton/h2_ExpTPCSignal_pr_b", "Expected TPC Signal Protons (before)", 
-              kTH2D, {{axisP}, {axisTPCSignal}});
-    hist.add("QA/before/Proton/h2_ExpTOFSignal_pr_b", "Expected TOF Signal Protons (before)", 
-              kTH2D, {{axisP}, {axisTOFSignal}});
     
     //after
     hist.add("QA/after/h_Counts", "Counts after cuts", kTH1D, {axisEvents});
@@ -177,6 +154,7 @@ struct meanPtFluc
     hist.add("QA/after/h_ITSChi2perCluster", "ITS #Chi^{2}/Cluster (after)",kTH1D, {axisChi2});
     hist.add("QA/after/h_crossedTPC", "Crossed TPC", kTH1D, {axisCrossedTPC});
 
+    hist.add("QA/after/Charged/h_Mult_ch", "Multiplicity Charged Prticles", kTH1D, {axisMult});  
     hist.add("QA/after/Charged/h_Eta_ch", "#eta Charged Particles (after)", kTH1D, {axisEta});
     hist.add("QA/after/Charged/h_Pt_ch", "p_{T} Charged Particles (after)", kTH1D, {axisPt});
     hist.add("QA/after/Charged/h2_DcaZ_ch", "DCA_{Z} Charged Particles (after)", 
@@ -189,9 +167,45 @@ struct meanPtFluc
     hist.add("QA/after/h2_TPCSignal_a", "TPC Signal (after)", kTH2D, {{axisP}, {axisTPCSignal}});
     hist.add("QA/after/h2_TOFSignal_a", "TOF Signal (after)", kTH2D, {{axisP}, {axisTOFSignal}});
 
-    hist.add("QA/after/Pion/h_Pt_pi_TPC", "p_{T} (Pions) only TPC Cut", kTH1D, {axisPt});
+    hist.add("QA/after/TPC/Pion/h_Pt_pi_TPC", "p_{T} (Pions) TPC", kTH1D, {axisPt});
+    hist.add("QA/after/TPC/Kaon/h_Pt_ka_TPC", "p_{T} (Kaons) TPC", kTH1D, {axisPt});
+    hist.add("QA/after/TPC/Proton/h_Pt_pr_TPC", "p_{T} (Protons) TPC ", kTH1D, {axisPt});  
+    hist.add("QA/after/TPC/Pion/h_rap_pi_TPC", "y (Pions) TPC ", kTH1D,{axisY});   
+    hist.add("QA/after/TPC/Kaon/h_rap_ka_TPC", "y (Kaons) TPC", kTH1D, {axisY});
+    hist.add("QA/after/TPC/Proton/h_rap_pr_TPC", "y (Protons) TPC", kTH1D, {axisY});
+    hist.add("QA/after/TPC/Pion/h2_TPCSignal_pi_b", "TPC Signal Pions", 
+              kTH2D, {{axisP}, {axisTPCSignal}});
+    hist.add("QA/after/TPC/Pion/h2_ExpTPCSignal_pi_b", "Expected TPC Signal Pions", 
+              kTH2D, {{axisP}, {axisTPCSignal}});
+    hist.add("QA/after/TPC/Kaon/h2_TPCSignal_ka_b", "TPC Signal Kaons", 
+              kTH2D, {{axisP}, {axisTPCSignal}});
+    hist.add("QA/after/TPC/Kaon/h2_ExpTPCSignal_ka_b", "Expected TPC Signal Kaons", 
+              kTH2D, {{axisP}, {axisTPCSignal}});
+    hist.add("QA/after/TPC/Proton/h2_TPCSignal_pr_b", "TPC Signal Protons", 
+              kTH2D, {{axisP}, {axisTPCSignal}});
+    hist.add("QA/after/TPC/Proton/h2_ExpTPCSignal_pr_b", "Expected TPC Signal Protons", 
+              kTH2D, {{axisP}, {axisTPCSignal}});
+    hist.add("QA/after/TOF/Pion/h_Pt_pi_TOF", "p_{T} (Pions) TPC+TOF", kTH1D, {axisPt}); 
+    hist.add("QA/after/TOF/Kaon/h_Pt_ka_TOF", "p_{T} (Kaons) TPC+TOF", kTH1D, {axisPt}); 
+    hist.add("QA/after/TOF/Proton/h_Pt_pr_TOF", "p_{T} (Protons) TPC+TOF", kTH1D, {axisPt});   
+    hist.add("QA/after/TOF/Pion/h_rap_pi_TOF", "y (Pions) TPC+TOF ", kTH1D, {axisY});   
+    hist.add("QA/after/TOF/Kaon/h_rap_ka_TOF", "y (Kaons) TPC+TOF", kTH1D, {axisY});
+    hist.add("QA/after/TOF/Proton/h_rap_pr_TOF", "y (Protons) TPC+TOF", kTH1D, {axisY});
+    hist.add("QA/after/TOF/Pion/h2_TOFSignal_pi_b", "TOF Signal Pions", 
+              kTH2D, {{axisP}, {axisTOFSignal}});
+    hist.add("QA/after/TOF/Pion/h2_ExpTOFSignal_pi_b", "Expected TOF Signal Pions", 
+              kTH2D, {{axisP}, {axisTOFSignal}});
+    hist.add("QA/after/TOF/Kaon/h2_TOFSignal_ka_b", "TOF Signal Kaons", 
+              kTH2D, {{axisP}, {axisTOFSignal}});
+    hist.add("QA/after/TOF/Kaon/h2_ExpTOFSignal_ka_b", "Expected TOF Signal Kaons", 
+              kTH2D, {{axisP}, {axisTOFSignal}});
+    hist.add("QA/after/TOF/Proton/h2_TOFSignal_pr_b", "TOF Signal Protons", 
+              kTH2D, {{axisP}, {axisTOFSignal}});
+    hist.add("QA/after/TOF/Proton/h2_ExpTOFSignal_pr_b", "Expected TOF Signal Protons", 
+              kTH2D, {{axisP}, {axisTOFSignal}});
+
+    hist.add("QA/after/Pion/h_Mult_pi", "Multiplicity Pion", kTH1D, {axisMult});
     hist.add("QA/after/Pion/h_Pt_pi", "p_{T} (Pions) TPC and TPC+TOF", kTH1D, {axisPt});
-    hist.add("QA/after/Pion/h_rap_pi_TPC", "y (Pions) only TPC Cut", kTH1D, {axisY});
     hist.add("QA/after/Pion/h_rap_pi", "y (Pions) TPC and TPC+TOF", kTH1D, {axisY});
     hist.add("QA/after/Pion/h2_Pt_rap_pi", "p_{T} vs y (Pions)", kTH2D, {{axisY}, {axisPt}});
     hist.add("QA/after/Pion/h2_DcaZ_pi", "DCA_{z} (Pions)", kTH2D, {{axisPt}, {axisDCAz}});
@@ -211,9 +225,8 @@ struct meanPtFluc
     hist.add("QA/after/Pion/h2_ExpTOFSignal_pi_a", "Expected TOF Signal Pions (after)", 
               kTH2D, {{axisP}, {axisTOFSignal}});
  
-    hist.add("QA/after/Kaon/h_Pt_ka_TPC", "p_{T} (Kaons) only TPC Cut", kTH1D, {axisPt});
+    hist.add("QA/after/Kaon/h_Mult_ka", "Multiplicity Kaon", kTH1D, {axisMult});
     hist.add("QA/after/Kaon/h_Pt_ka", "p_{T} (Kaons) TPC and TPC+TOF", kTH1D, {axisPt});
-    hist.add("QA/after/Kaon/h_rap_ka_TPC", "y (Kaons) only TPC Cut", kTH1D, {axisY});
     hist.add("QA/after/Kaon/h_rap_ka", "y (Kaons) TPC and TPC+TOF", kTH1D, {axisY});
     hist.add("QA/after/Kaon/h2_Pt_rap_ka", "p_{T} vs y (Kaons)", kTH2D, {{axisY}, {axisPt}});
     hist.add("QA/after/Kaon/h2_DcaZ_ka", "DCA_{z} Kaons", kTH2D, {{axisPt}, {axisDCAz}});
@@ -233,9 +246,8 @@ struct meanPtFluc
     hist.add("QA/after/Kaon/h2_ExpTOFSignal_ka_a", "Expected TOF Signal Kaons (after)", 
               kTH2D, {{axisP}, {axisTOFSignal}});
     
-    hist.add("QA/after/Proton/h_Pt_pr_TPC", "p_{T} (Protons) only TPC Cut", kTH1D, {axisPt});
+    hist.add("QA/after/Proton/h_Mult_pr", "Multiplicity Proton", kTH1D, {axisMult});
     hist.add("QA/after/Proton/h_Pt_pr", "p_{T} (Protons) TPC and TPC+TOF", kTH1D, {axisPt});
-    hist.add("QA/after/Proton/h_rap_pr_TPC", "y (Protons) only TPC Cut", kTH1D, {axisY});
     hist.add("QA/after/Proton/h_rap_pr", "y(Protons) TPC and TPC+TOF", kTH1D, {axisY});
     hist.add("QA/after/Proton/h2_Pt_rap_pr", "p_{T} vs y (Protons)", kTH2D, {{axisY}, {axisPt}});
     hist.add("QA/after/Proton/h2_DcaZ_pr", "DCA_{z} (Protons)", kTH2D, {{axisPt}, {axisDCAz}});
@@ -355,7 +367,7 @@ struct meanPtFluc
     hist.fill(HIST("QA/before/h_VtxZ"), myCol.posZ());
     hist.fill(HIST("QA/before/h_Counts"), 2);
   }
-  PROCESS_SWITCH(histograms, process_QA, "process QA", true);
+  PROCESS_SWITCH(meanPtFluc, process_QA, "process QA", true);
   
   void process(MyFilteredCollisions::iterator const& col, MyFilteredTracks const& tracks)
   {   
@@ -404,8 +416,8 @@ struct meanPtFluc
       hist.fill(HIST("QA/before/Kaon/h2_TPCNsigma_ka"), track.p(), track.tpcNSigmaKa());
       hist.fill(HIST("QA/before/Kaon/h2_TOFNsigma_ka"), track.p(), track.tofNSigmaKa());
       hist.fill(HIST("QA/before/Kaon/h2_TpcTofNsigma_ka"), track.tpcNSigmaKa(), track.tofNSigmaKa());
-
       
+    
       //###################################################//
       //             TPC (Without p cuts)                  //
       //###################################################//
@@ -414,30 +426,30 @@ struct meanPtFluc
         N_Pi_tpc++;
         Q1_Pi_tpc += track.pt();
         Q2_Pi_tpc += track.pt() * track.pt();
-        hist.fill(HIST("QA/after/Pion/h_Pt_pi_TPC"), track.pt());
-        hist.fill(HIST("QA/after/Pion/h_rap_pi_TPC"), track.rapidity(massPi));
-        hist.fill(HIST("QA/before/Pion/h2_TPCSignal_pi_b"), track.p(), track.tpcSignal()); 
-        hist.fill(HIST("QA/before/Pion/h2_ExpTPCSignal_pi_b"), track.p(), track.tpcExpSignalPi(track.tpcSignal()));       
+        hist.fill(HIST("QA/after/TPC/Pion/h_Pt_pi_TPC"), track.pt());
+        hist.fill(HIST("QA/after/TPC/Pion/h_rap_pi_TPC"), track.rapidity(massPi));
+        hist.fill(HIST("QA/after/TPC/Pion/h2_TPCSignal_pi_b"), track.p(), track.tpcSignal()); 
+        hist.fill(HIST("QA/after/TPC/Pion/h2_ExpTPCSignal_pi_b"), track.p(), track.tpcExpSignalPi(track.tpcSignal()));       
       }
       if(abs(track.tpcNSigmaKa()) < nSigCut3){
         if(abs(track.rapidity(massKa)) >= 0.5) continue;
         N_Ka_tpc++;
         Q1_Ka_tpc += track.pt();
         Q2_Ka_tpc += track.pt() * track.pt();
-        hist.fill(HIST("QA/after/Kaon/h_Pt_ka_TPC"), track.pt());
-        hist.fill(HIST("QA/after/Kaon/h_rap_ka_TPC"), track.rapidity(massKa));  
-        hist.fill(HIST("QA/before/Kaon/h2_TPCSignal_ka_b"), track.p(), track.tpcSignal()); 
-        hist.fill(HIST("QA/before/Kaon/h2_ExpTPCSignal_ka_b"), track.p(), track.tpcExpSignalKa(track.tpcSignal())); 
+        hist.fill(HIST("QA/after/TPC/Kaon/h_Pt_ka_TPC"), track.pt());
+        hist.fill(HIST("QA/after/TPC/Kaon/h_rap_ka_TPC"), track.rapidity(massKa));  
+        hist.fill(HIST("QA/after/TPC/Kaon/h2_TPCSignal_ka_b"), track.p(), track.tpcSignal()); 
+        hist.fill(HIST("QA/after/TPC/Kaon/h2_ExpTPCSignal_ka_b"), track.p(), track.tpcExpSignalKa(track.tpcSignal())); 
       }
       if(abs(track.tpcNSigmaPr()) < nSigCut3){
         if(abs(track.rapidity(massPr)) >= 0.5) continue;
-        N_Pr_tpc++;     
+        N_Pr_tpc++;   
         Q1_Pr_tpc += track.pt();  
-        Q2_Pr_tpc += track.pt() * track.pt(); 
-        hist.fill(HIST("QA/after/Proton/h_Pt_pr_TPC"), track.pt());
-        hist.fill(HIST("QA/after/Proton/h_rap_pr_TPC"), track.rapidity(massPr)); 
-        hist.fill(HIST("QA/before/Proton/h2_TPCSignal_pr_b"), track.p(), track.tpcSignal()); 
-        hist.fill(HIST("QA/before/Proton/h2_ExpTPCSignal_pr_b"), track.p(), track.tpcExpSignalPr(track.tpcSignal())); 
+        Q2_Pr_tpc += track.pt() * track.pt();   
+        hist.fill(HIST("QA/after/TPC/Proton/h_Pt_pr_TPC"), track.pt());
+        hist.fill(HIST("QA/after/TPC/Proton/h_rap_pr_TPC"), track.rapidity(massPr)); 
+        hist.fill(HIST("QA/after/TPC/Proton/h2_TPCSignal_pr_b"), track.p(), track.tpcSignal()); 
+        hist.fill(HIST("QA/after/TPC/Proton/h2_ExpTPCSignal_pr_b"), track.p(), track.tpcExpSignalPr(track.tpcSignal())); 
       }
 
       //###################################################//
@@ -454,9 +466,11 @@ struct meanPtFluc
           if(abs(track.rapidity(massPi)) >= 0.5) continue;
           N_Pi_tof++;
           Q1_Pi_tof += track.pt();
-          Q2_Pi_tof += track.pt() * track.pt();   
-          hist.fill(HIST("QA/before/Pion/h2_TOFSignal_pi_b"), track.p(), track.beta()); 
-          hist.fill(HIST("QA/before/Pion/h2_ExpTOFSignal_pi_b"), track.p(), track.tofExpSignalPi(track.beta()));             
+          Q2_Pi_tof += track.pt() * track.pt(); 
+          hist.fill(HIST("QA/after/TOF/Pion/h_Pt_pi_TOF"), track.pt());
+          hist.fill(HIST("QA/after/TOF/Pion/h_rap_pi_TOF"), track.rapidity(massPi));   
+          hist.fill(HIST("QA/after/TOF/Pion/h2_TOFSignal_pi_b"), track.p(), track.beta()); 
+          hist.fill(HIST("QA/after/TOF/Pion/h2_ExpTOFSignal_pi_b"), track.p(), track.tofExpSignalPi(track.beta()));             
         }
         if ((std::pow(track.tpcNSigmaKa(),2) + std::pow(track.tofNSigmaKa(),2)) < 6.0)
         {
@@ -464,8 +478,10 @@ struct meanPtFluc
           N_Ka_tof++;
           Q1_Ka_tof += track.pt();
           Q2_Ka_tof += track.pt() * track.pt();
-          hist.fill(HIST("QA/before/Kaon/h2_TOFSignal_ka_b"), track.p(), track.beta()); 
-          hist.fill(HIST("QA/before/Kaon/h2_ExpTOFSignal_ka_b"), track.p(), track.tofExpSignalKa(track.beta())); 
+          hist.fill(HIST("QA/after/TOF/Kaon/h_Pt_ka_TOF"), track.pt());
+          hist.fill(HIST("QA/after/TOF/Kaon/h_rap_ka_TOF"), track.rapidity(massKa));  
+          hist.fill(HIST("QA/after/TOF/Kaon/h2_TOFSignal_ka_b"), track.p(), track.beta()); 
+          hist.fill(HIST("QA/after/TOF/Kaon/h2_ExpTOFSignal_ka_b"), track.p(), track.tofExpSignalKa(track.beta())); 
         }
         if ((std::pow(track.tpcNSigmaPr(),2) + std::pow(track.tofNSigmaPr(),2)) < 6.0)
         {
@@ -473,22 +489,24 @@ struct meanPtFluc
           N_Pr_tof++;
           Q1_Pr_tof += track.pt();
           Q2_Pr_tof += track.pt() * track.pt();
-          hist.fill(HIST("QA/before/Proton/h2_TOFSignal_pr_b"), track.p(), track.beta()); 
-          hist.fill(HIST("QA/before/Proton/h2_ExpTOFSignal_pr_b"), track.p(), track.tofExpSignalPr(track.beta())); 
+          hist.fill(HIST("QA/after/TOF/Proton/h_Pt_pr_TOF"), track.pt());
+          hist.fill(HIST("QA/after/TOF/Proton/h_rap_pr_TOF"), track.rapidity(massPr)); 
+          hist.fill(HIST("QA/after/TOF/Proton/h2_TOFSignal_pr_b"), track.p(), track.beta()); 
+          hist.fill(HIST("QA/after/TOF/Proton/h2_ExpTOFSignal_pr_b"), track.p(), track.tofExpSignalPr(track.beta())); 
         }  
       }
-
       
       //####################################################//
       //     TPC and TPC+TOF nSigma Cuts (with p cuts)      //
       //####################################################//
       //For Pions: 
-      if ((abs(track.tpcNSigmaPi()) < nSigCut3 && track.p() <= piP1 )
-        ||(abs(track.tpcNSigmaPi()) < nSigCut2 && track.p() > piP1 && track.p() <= piP2)
-        ||(track.hasTOF() && abs(track.tpcNSigmaPi()) < nSigCut3 && 
-                   ((abs(track.tofNSigmaPi()) < nSigCut3 && track.p() > piP2 && track.p() <= piP3)
-                  ||(abs(track.tofNSigmaPi()) < nSigCut25 && track.p() > piP3 && track.p() <= piP4)
-                  ||(abs(track.tofNSigmaPi()) < nSigCut2 && track.p() > piP4))))
+      if ((track.hasTOF()== false && 
+                     ((abs(track.tpcNSigmaPi()) < nSigCut3 && track.p() <= piP1 )
+                    ||(abs(track.tpcNSigmaPi()) < nSigCut2 && track.p() > piP1 && track.p() <= piP2)))
+        ||(track.hasTOF() && abs(track.tpcNSigmaPi()) < nSigCut4 && abs(track.tofNSigmaEl()) > nSigCut1 && 
+                     ((abs(track.tofNSigmaPi()) < nSigCut3  && track.p() <= piP3)
+                    ||(abs(track.tofNSigmaPi()) < nSigCut25 && track.p() > piP3 && track.p() <= piP4)
+                    ||(abs(track.tofNSigmaPi()) < nSigCut2  && track.p() > piP4))))
       {
         if(abs(track.rapidity(massPi)) >= 0.5) continue;       
         N_Pi++;
@@ -514,15 +532,16 @@ struct meanPtFluc
       }
       
       //For Kaons:
-      if ((abs(track.tpcNSigmaKa()) < nSigCut3   && track.p() > kaP1 && track.p() <= kaP2)
-        ||(abs(track.tpcNSigmaKa()) < nSigCut25  && track.p() > kaP2 && track.p() <= kaP3)
-        ||(abs(track.tpcNSigmaKa()) < nSigCut2   && track.p() > kaP3 && track.p() <= kaP4)
-        ||(abs(track.tpcNSigmaKa()) < nSigCut15  && track.p() > kaP4 && track.p() <= kaP5)
-        ||(track.hasTOF() && abs(track.tpcNSigmaKa()) < nSigCut3 && 
-               ((abs(track.tofNSigmaKa()) < nSigCut3  && track.p() > kaP5 && track.p() <= kaP6)
-              ||(abs(track.tofNSigmaKa()) < nSigCut2  && track.p() > kaP6 && track.p() <= kaP7)
-              ||(abs(track.tofNSigmaKa()) < nSigCut15 && track.p() > kaP7 && track.p() <= kaP8)
-              ||(abs(track.tofNSigmaKa()) < nSigCut1  && track.p() > kaP8))))
+      if ((track.hasTOF()== false && 
+                     ((abs(track.tpcNSigmaKa()) < nSigCut3   && track.pt() > kaP1 && track.p() <= kaP2)
+                    ||(abs(track.tpcNSigmaKa()) < nSigCut25  && track.p() > kaP2 && track.p() <= kaP3)
+                    ||(abs(track.tpcNSigmaKa()) < nSigCut2   && track.p() > kaP3 && track.p() <= kaP4)
+                    ||(abs(track.tpcNSigmaKa()) < nSigCut15  && track.p() > kaP4 && track.p() <= kaP5)))
+        ||(track.hasTOF() && abs(track.tpcNSigmaKa()) < nSigCut4 && abs(track.tofNSigmaEl()) > nSigCut1 && 
+                     ((abs(track.tofNSigmaKa()) < nSigCut3  && track.pt() > kaP1 && track.p() <= kaP6)
+                    ||(abs(track.tofNSigmaKa()) < nSigCut2  && track.p() > kaP6 && track.p() <= kaP7)
+                    ||(abs(track.tofNSigmaKa()) < nSigCut15 && track.p() > kaP7 && track.p() <= kaP8)
+                    ||(abs(track.tofNSigmaKa()) < nSigCut1  && track.p() > kaP8))))
       {
         if(abs(track.rapidity(massKa)) >= 0.5) continue;
         pt_Ka = track.pt();
@@ -548,13 +567,14 @@ struct meanPtFluc
       }
 
       //For Protons: 
-      if ((abs(track.tpcNSigmaPr()) < nSigCut3   && track.p() > prP1 && track.p() <= prP2 )
-        ||(abs(track.tpcNSigmaPr()) < nSigCut25 && track.p() > prP2 && track.p() <= prP3)
-        ||(abs(track.tpcNSigmaPr()) < nSigCut2   && track.p() > prP3 && track.p() <= prP4)
-        ||(abs(track.tpcNSigmaPr()) < nSigCut15 && track.p() > prP4 && track.p() <= prP5)
-        ||(abs(track.tpcNSigmaPr()) < nSigCut1   && track.p() > prP5 && track.p() <= prP6)
-        ||(track.hasTOF() && abs(track.tpcNSigmaPr()) < nSigCut3 && 
-            (abs(track.tofNSigmaPr()) < nSigCut25 && track.p() > prP6)))
+      if((track.hasTOF()== false && 
+                 ((abs(track.tpcNSigmaPr()) < nSigCut3   && track.pt() > prP1 && track.p() <= prP2)
+                ||(abs(track.tpcNSigmaPr()) < nSigCut25  && track.p() > prP2 && track.p() <= prP3)
+                ||(abs(track.tpcNSigmaPr()) < nSigCut2   && track.p() > prP3 && track.p() <= prP4)
+                ||(abs(track.tpcNSigmaPr()) < nSigCut15  && track.p() > prP4 && track.p() <= prP5)
+                ||(abs(track.tpcNSigmaPr()) < nSigCut1   && track.p() > prP5 && track.p() <= prP6)))
+        ||(track.hasTOF() && abs(track.tpcNSigmaPr()) < nSigCut4 && abs(track.tofNSigmaEl()) > nSigCut1  
+                && abs(track.tofNSigmaPr()) < nSigCut3 && track.pt() > prP1))
       {
         if(abs(track.rapidity(massPr)) >= 0.5) continue; 
         pt_Pr = track.pt();
@@ -565,14 +585,14 @@ struct meanPtFluc
         N_Pr++;
         hist.fill(HIST("QA/after/Proton/h_Pt_pr"), track.pt());
         hist.fill(HIST("QA/after/Proton/h_rap_pr"), track.rapidity(massPr));
-        hist.fill(HIST("QA/after/Proton/h2_Pt_rap_pr"), track.rapidity(massPr), track.pt());
-        hist.fill(HIST("QA/after/Proton/h2_DcaXY_pr"), track.pt(), track.dcaXY() );
         hist.fill(HIST("QA/after/Proton/h2_DcaZ_pr"), track.pt(), track.dcaZ());
+        hist.fill(HIST("QA/after/Proton/h2_DcaXY_pr"), track.pt(), track.dcaXY());
+        hist.fill(HIST("QA/after/Proton/h2_Pt_rap_pr"), track.rapidity(massPr), track.pt());
         hist.fill(HIST("QA/after/Proton/h2_TPCNsigma_pr"), track.p(), track.tpcNSigmaPr());
         hist.fill(HIST("QA/after/Proton/h2_TOFNsigma_pr"), track.p(), track.tofNSigmaPr());
         hist.fill(HIST("QA/after/Proton/h2_TpcTofNsigma_pr"), track.tpcNSigmaPr(), track.tofNSigmaPr());
-        hist.fill(HIST("QA/after/h2_TPCSignal_a"), track.p(), track.tpcSignal()); 
         hist.fill(HIST("QA/after/Proton/h2_TPCSignal_pr_a"), track.p(), track.tpcSignal()); 
+        hist.fill(HIST("QA/after/h2_TPCSignal_a"), track.p(), track.tpcSignal()); 
         hist.fill(HIST("QA/after/h2_TOFSignal_a"), track.p(), track.beta()); 
         hist.fill(HIST("QA/after/Proton/h2_TOFSignal_pr_a"), track.p(), track.beta()); 
         hist.fill(HIST("QA/after/Proton/h2_ExpTOFSignal_pr_a"), track.p(), track.tofExpSignalPr(track.beta())); 
@@ -600,6 +620,12 @@ struct meanPtFluc
     hist.fill(HIST("Analysis/Kaon/h_Mult_ka"), N_Ka);
     hist.fill(HIST("Analysis/Proton/h_Mult_pr"), N_Pr);
 
+    hist.fill(HIST("QA/after/Charged/h_Mult_ch"), Nch);
+    hist.fill(HIST("QA/after/Pion/h_Mult_pi"), N_Pi);
+    hist.fill(HIST("QA/after/Kaon/h_Mult_ka"), N_Ka);
+    hist.fill(HIST("QA/after/Proton/h_Mult_pr"), N_Pr);
+
+
     //Charged Particles:
     if(Nch > 1)
     {
@@ -615,7 +641,7 @@ struct meanPtFluc
 
     if (Nch > 2)
     {  
-      auto Nch3 = double(Nch1) * (double(Nch1) - 1) * (double(Nch1) - 2);
+      auto Nch3 = double(Nch) * (double(Nch) - 1) * (double(Nch) - 2);
       auto threepart = ((Q1_ch * Q1_ch * Q1_ch) - (3 * Q2_ch * Q1_ch) + 2 * Q3_ch);
       auto threepart1 = threepart / Nch3;
       hist.fill(HIST("Analysis/Charged/h_threepart_Mult_ch"), NTPC, threepart1, N_FT0M);
@@ -623,7 +649,7 @@ struct meanPtFluc
 
     if(Nch > 3)
     {
-      auto Nch4 = double(Nch1) * (double(Nch1) - 1) * (double(Nch1) - 2) * (double(Nch1) - 3);
+      auto Nch4 = double(Nch) * (double(Nch) - 1) * (double(Nch) - 2) * (double(Nch) - 3);
       auto fourpart = ((Q1_ch * Q1_ch * Q1_ch * Q1_ch) - (6 * Q2_ch * Q1_ch * Q1_ch) + (3 * Q2_ch * Q2_ch) + (8 * Q3_ch * Q1_ch) - 6 * Q4_ch );
       auto fourpart1 = fourpart / Nch4;
       hist.fill(HIST("Analysis/Charged/h_fourpart_Mult_ch"), NTPC, fourpart1, N_FT0M);
@@ -777,4 +803,3 @@ WorkflowSpec defineDataProcessing(ConfigContext const& cfgc)
 {
   return WorkflowSpec{adaptAnalysisTask<meanPtFluc>(cfgc) };
 }
-
