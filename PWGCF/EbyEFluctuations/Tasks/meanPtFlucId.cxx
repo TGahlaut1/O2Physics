@@ -16,7 +16,6 @@
 ///
 /// \author Tanu Gahlaut <tanu.gahlaut@cern.ch>
 
-
 #include <vector>
 #include <TPDGCode.h>
 
