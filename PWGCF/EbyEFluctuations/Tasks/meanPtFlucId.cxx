@@ -1117,7 +1117,7 @@ struct MeanPtFlucId {
     int nChSim = 0, nPiSim = 0, nKaSim = 0, nPrSim = 0;
     float pt = 0., eta = 0, phi = 0., rap = 0.;
     double q1Ch = 0., q2Ch = 0., q1Pi = 0., q2Pi = 0., q1Ka = 0., q2Ka = 0., q1Pr = 0., q2Pr = 0.;
-    
+
     for (auto const& mcPart : mcParticles) {
       if (!mcPart.isPhysicalPrimary()) {
         continue;
